@@ -55,7 +55,7 @@ void atualizarElemento(struct arraylist* lista, int valor, int posicao) {
 }
 
 void removerElementoNoFim(){
-    qtdade--;
+    lista->qtdade--;
 }
 
 void removerElementoEmPosicao(struct arraylist* lista, int posicao) {
