@@ -11,107 +11,200 @@ struct linkedlist {
     int qtdade;
 };
 
-struct linkedlist* inicializar() {
-    struct linkedlist* lista = (struct linkedlist*)malloc(sizeof(struct linkedlist));
-    lista->cabeca = NULL;
+struct linkedlist* inicializar(){
+
+        struct linkedlist* lista = (struct linkedlist*)malloc(sizeof(struct linkedlist));
+    
     lista->qtdade = 0;
+    
+    lista->cabeça=NULL;
+    
     return lista;
 }
 
-struct no* alocarNovoNo(int valor) {
-    struct no* novoNo = (struct no*)malloc(sizeof(struct no));
-    novoNo->val = valor;
-    novoNo->prox = NULL;
+struct no* alocarNovoNo(int valor){
+    
+        struct no* novoNo = (struct no*)malloc(sizeof(struct no));
+    
+    novoNo->val=valor;
+    
+    novoNo->prox=NULL;
+    
     return novoNo;
+
 }
 
-void inserirElementoNoFim(struct linkedlist* lista, int valor) {
-    if (lista->cabeca == 0) {
+void inserirElementoNoFim(struct linkedlist* lista, int valor){
+
+    if(lista->cabeca==0){
+    
         lista->cabeca = alocarNovoNo(valor);
         lista->qtdade++;
     }
-    else {
-        struct no* aux, * novoNo;
-        aux = lista->cabeca;
+    
+    else{
+        struct no* e, * novoNo;
+        
         novoNo = alocarNovoNo(valor);
-        for (int i = 0; i < lista->qtdade - 1; i++) {
-            aux = aux->prox;
+        
+        e=lista->cabeca;
+        
+        for (int i=0; i<lista->qtdade-1; i++){
+        
+            e=e->prox;
         }
-        aux->prox = novoNo;
+        
+        e->prox = novoNo;
+        
         lista->qtdade++;
     }
+
 }
 
-void inserirElementoNoInicio(struct linkedlist* lista, int valor) {
-    if (lista->cabeca == 0) {
-        lista->cabeca = alocarNovoNo(valor);
+void inserirElementoNoInicio(struct linkedlist* lista, int valor){
+
+    if (lista->cabeca==0){
+    
+        lista->cabeca=alocarNovoNo(valor);
+        
         lista->qtdade++;
     }
-    else {
-        struct no* aux;
-        aux = lista->cabeca;
-        lista->cabeca = alocarNovoNo(valor);
-        lista->cabeca->prox = aux;
+    else{
+    
+        struct no* e;
+        
+        e=lista->cabeca;
+        
+        lista->cabeca=alocarNovoNo(valor);
+        
+        lista->cabeca->prox=e;
+        
         lista->qtdade++;
     }
+
 }
 
-void inserirElementoEmPosicao(struct linkedlist* lista, int valor, int posicao) {
-    if (posicao >= 0 && posicao <= lista->qtdade) {
-        if (posicao == 0) {
-            inserirElementoNoInicio(lista, valor);
+void inserirElementoEmPosicao(struct linkedlist* lista, int valor, int posicao){
+    
+    if (posicao>=0 && posicao<=lista->qtdade){
+    
+               if (posicao==0){
+
+                     if (lista->cabeca==0){
+
+                  lista->cabeca=alocarNovoNo(valor);
+
+                  lista->qtdade++;
+              }
+              else{
+
+                 struct no* e;
+
+                  e=lista->cabeca;
+
+                  lista->cabeca=alocarNovoNo(valor);
+
+                  lista->cabeca->prox=e;
+
+                  lista->qtdade++;
+              }
         }
         else if (posicao == lista->qtdade) {
-            inserirElementoNoFim(lista, valor);
+            if(lista->cabeca==0){
+    
+        lista->cabeca = alocarNovoNo(valor);
+        lista->qtdade++;
+    }
+    
+    else{
+        struct no* e, * novoNo;
+        
+        novoNo = alocarNovoNo(valor);
+        
+        e=lista->cabeca;
+        
+        for (int i=0; i<lista->qtdade-1; i++){
+        
+            e=e->prox;
+        }
+        
+        e->prox = novoNo;
+        
+        lista->qtdade++;
+    }
         }
         else {
-            struct no* aux1 = lista->cabeca;
-            struct no* aux2 = alocarNovoNo(valor);
-            for (int i = 0; i < posicao - 1; i++) {
-                aux1 = aux1->prox;
+            struct no* e1 = lista->cabeca;
+            
+            struct no* e2 = alocarNovoNo(valor);
+            
+            for (int i=0; i<posicao-1; i++){
+            
+                e1=e1->prox;
             }
-            aux2->prox = aux1->prox;
-            aux1->prox = aux2;
+            
+            e2->prox=e1->prox;
+            e1->prox=e2;
             lista->qtdade++;
         }
     }
 }
 
-int obterElementoEmPosicao(struct linkedlist* lista, int posicao) {
-    struct no* aux = lista->cabeca;
-    for (int i = 0; i < posicao; i++) {
-        aux = aux->prox;
+int obterElementoEmPosicao(struct linkedlist* lista, int posicao){
+    
+    struct no* e=lista->cabeca;
+    
+    for(int i=0;i<posicao;i++){
+    
+        e=e->prox;
     }
-    return aux->val;
+    
+    return e->val;
 }
 
-void removerElementoEmPosicao(struct linkedlist* lista, int posicao) {
-    if (posicao >= 0 && posicao < lista->qtdade) {
-        struct no* aux1, * aux2, * aux3;
-        if (posicao == 0) {
-            aux1 = lista->cabeca;
-            lista->cabeca = lista->cabeca->prox;
-            free(aux1);
+void removerElementoEmPosicao(struct linkedlist* lista, int posicao){
+
+    if(posicao>=0 && posicao<lista->qtdade){
+        struct no* e1, * e2, * e3;
+        
+        if(posicao==0){
+            e1=lista->cabeca;
+            
+            lista->cabeca=lista->cabeca->prox;
+            
+            free(e1);
         }
-        else if (posicao == 1) {
-            aux1 = lista->cabeca->prox;
-            aux2 = aux1->prox;
-            lista->cabeca->prox = aux2;
-            free(aux1);
+        else if(posicao==1){
+        
+            e1=lista->cabeca->prox;
+            
+            e2=e1->prox;
+            
+            lista->cabeca->prox=e2;
+            
+            free(e1);
         }
-        else {
-            aux1 = lista->cabeca;
-            for (int i = 0; i < posicao - 1; i++) {
-                aux1 = aux1->prox;                
+        else{
+            e1=lista->cabeca;
+            
+            for(int i=0;i<posicao-1;i++){
+            
+                e1=e1->prox;                
             }
-            aux2 = aux1->prox;
-            aux2 = aux2->prox;
-            aux3 = aux1->prox;
-            aux1->prox = aux2;
-            free(aux3);
+            e2=e1->prox;
+            
+            e2=e2->prox;
+            
+            e3=e1->prox;
+            
+            e1->prox=e2;
+            
+            free(e3);
         }
+        
         lista->qtdade--;
     }
+    
 }
 
 void imprimirLista(struct linkedlist* lista) {
